@@ -8,6 +8,8 @@ if not -> [RedEM](https://github.com/kanersps/redem) --> [RedEM:RP](https://gith
 - Clone redemrp_menu_base into [redemrp] folder
 - add ```ensure redemrp_menu_base``` after ```ensure redem_roleplay```
 
+![alt text](https://i.imgur.com/h7CIxyM.png)
+
 ## 2.Usage
 Add this on top your client side file
 ```
