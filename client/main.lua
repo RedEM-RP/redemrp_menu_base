@@ -8,15 +8,15 @@ MenuData.RegisteredTypes['default'] = {
         SendNUIMessage({
             ak_menubase_action = 'openMenu',
             ak_menubase_namespace = namespace,
-             ak_menubase_name = name,
-             ak_menubase_data = data
+            ak_menubase_name = name,
+            ak_menubase_data = data
         })end,
     close  = function(namespace, name)
         SendNUIMessage({
             ak_menubase_action = 'closeMenu',
-             ak_menubase_namespace = namespace,
-             ak_menubase_name = name,
-             ak_menubase_data = data
+            ak_menubase_namespace = namespace,
+            ak_menubase_name = name,
+            ak_menubase_data = data
         })
     end
 }
@@ -145,6 +145,10 @@ function MenuData.IsOpen (type, namespace, name)
     return MenuData.GetOpened(type, namespace, name) ~= nil
 end
 
+function MenuData.ReOpen(oldMenu)
+    MenuData.Open(oldMenu.type, oldMenu.namespace, oldMenu.name, oldMenu.data, oldMenu.submit, oldMenu.cancel, oldMenu.change, oldMenu.close)
+end
+
 
 --==================================FUNCTIONS ==================================
 
@@ -196,40 +200,53 @@ end)
 
 --==================================  CONTROL SECTION =========================================
 Citizen.CreateThread(function()
+    local PauseMenuState    = false
+    local MenusToReOpen     = {}
     while true do
-        Citizen.Wait(10)
+        Citizen.Wait(0)
         if #MenuData.Opened > 0 then
 
-            if ( IsControlJustPressed(0, 0x43DBF61F)  or  IsDisabledControlJustPressed(0, 0x43DBF61F)) and (GetGameTimer() - Timer) > 250 then
+            if ( IsControlJustReleased(0, 0x43DBF61F)  or  IsDisabledControlJustReleased(0, 0x43DBF61F)) then
                 SendNUIMessage({ak_menubase_action = 'controlPressed', ak_menubase_control = 'ENTER'})
-                Timer = GetGameTimer()
             end
 
-            if (IsControlJustPressed(0, 0x308588E6)  or  IsDisabledControlJustPressed(0, 0x308588E6))and (GetGameTimer() - Timer) > 250   then
+            if (IsControlJustReleased(0, 0x308588E6)  or  IsDisabledControlJustReleased(0, 0x308588E6)) then
                 SendNUIMessage({ak_menubase_action  = 'controlPressed', ak_menubase_control = 'BACKSPACE'})
-                Timer = GetGameTimer()
             end
 
-            if (IsControlJustPressed(0, 0x911CB09E)  or  IsDisabledControlJustPressed(0, 0x911CB09E)) and (GetGameTimer() - Timer) > 150 then
-
+            if (IsControlJustReleased(0, 0x911CB09E)  or  IsDisabledControlJustReleased(0, 0x911CB09E)) then
                 SendNUIMessage({ak_menubase_action  = 'controlPressed', ak_menubase_control = 'TOP'})
-                Timer = GetGameTimer()
             end
 
-            if (IsControlJustPressed(0, 0x4403F97F)  or  IsDisabledControlJustPressed(0, 0x4403F97F)) and (GetGameTimer() - Timer) > 150 then
-
+            if (IsControlJustReleased(0, 0x4403F97F)  or  IsDisabledControlJustReleased(0, 0x4403F97F)) then
                 SendNUIMessage({ak_menubase_action  = 'controlPressed', ak_menubase_control = 'DOWN'})
-                Timer = GetGameTimer()
             end
 
-            if (IsControlJustPressed(0, 0xAD7FCC5B)  or  IsDisabledControlJustPressed(0, 0xAD7FCC5B))  and (GetGameTimer() - Timer) > 150 then
+            if (IsControlJustReleased(0, 0xAD7FCC5B)  or  IsDisabledControlJustReleased(0, 0xAD7FCC5B)) then
                 SendNUIMessage({ak_menubase_action  = 'controlPressed', ak_menubase_control = 'LEFT'})
-                Timer = GetGameTimer()
             end
 
-            if (IsControlJustPressed(0, 0x65F9EC5B)  or  IsDisabledControlJustPressed(0, 0x65F9EC5B))and (GetGameTimer() - Timer) > 150 then
+            if (IsControlJustReleased(0, 0x65F9EC5B)  or  IsDisabledControlJustReleased(0, 0x65F9EC5B)) then
                 SendNUIMessage({ak_menubase_action  = 'controlPressed', ak_menubase_control = 'RIGHT'})
-                Timer = GetGameTimer()
+            end
+
+            if IsPauseMenuActive() then
+                if not PauseMenuState then
+                    PauseMenuState = true
+                    for k, v in pairs(MenuData.GetOpenedMenus()) do
+                        table.insert(MenusToReOpen, v)
+                    end
+                    MenuData.CloseAll()
+                end               
+            end
+        else
+            if PauseMenuState and not IsPauseMenuActive() then
+                PauseMenuState = false
+                Citizen.Wait(1000)
+                for k, v in pairs(MenusToReOpen) do
+                    MenuData.ReOpen(v)
+                end
+                MenusToReOpen = { }
             end
         end
     end
