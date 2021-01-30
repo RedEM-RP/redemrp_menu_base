@@ -5,6 +5,12 @@
 	font-family: crock;
 	src: url(../fonts/crock.ttf) format('truetype')
 }
+
+@font-face {
+	font-family: HapnaSlabSerif-Medium;
+	src: url(../fonts/HapnaSlabSerif-Medium.ttf) format('truetype')
+}
+
 .menu {
 	font-family: "crock", crock, serif;
 	min-width: 380px;
@@ -18,7 +24,7 @@
 }
 .topline {
 	width: 90%;
-	height:3px;
+	height:4px;
 	margin: auto auto;
 	background-image: url(divider_line.png);
 	background-repeat: no-repeat;
@@ -63,17 +69,19 @@
 }
 
 .menu .menu-items {
-	max-height: 525px;
+	min-height: 275px;
+	max-height: 405px;
 	overflow-y: hidden;
 	font-weight: 500;
 }
 
 .menu .menu-items .menu-item {
 	width:87%;
+	height:2vh;
 	display: block;
   padding: 7px;
-  font-size: 14px;
-	text-align: left;
+    font-size: 18px;
+ text-align: left;
   text-indent: 5px;
   margin-top: 6px;
   margin-left:auto;
@@ -82,6 +90,7 @@
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 100% 110%;
+		font-family: "HapnaSlabSerif-Medium", HapnaSlabSerif-Medium, serif;
 
 }
 
@@ -91,6 +100,22 @@
 	background-position: center;
 	background-size: 100% 100%;
 }
+
+.menu .menu-items .menu-item.slider {
+   min-height:2.5vh;
+   font-size: 16px;
+}
+ #slider-label{
+    width:40%;
+	float:left;
+	text-align: center;
+}
+
+i{
+	float:left;
+	font-size:18px;
+	margin-top:3%;
+}
 .desciption {
 	margin-left:auto;
 	margin-right:auto;
@@ -98,11 +123,21 @@
 	
 	
 }
+.options-amount {
+	float:right;
+	opacity:0.8;
+	font-size:14px;
+	margin-top:-7%;
+	margin-right:7%;
+}
+
+
+
 .head > span {
   position: relative;
   display: inline-block;
   top: 50%;                    
-   transform: translate(0, -50%)
+  transform: translate(0, -50%)
 }
 
 .head > span::before,
@@ -117,6 +152,14 @@
   margin-left: 15px;
 }
 
+.arrows {
+ width:25%;
+ float:left;
+}
+#item-label {
+ width:75%;
+ float:left;
+}
 
 
 .menu.align-left {

@@ -6,16 +6,17 @@
 				'<div class="menu-items">' +
 				'<div class="topline"></div>' +
 					'{{#elements}}' +
-						'<div class="menu-item {{#selected}}selected{{/selected}}">' +
-							'{{{label}}}{{#isSlider}} : &lt;{{{sliderLabel}}}&gt;{{/isSlider}}' +
+						'<div class="menu-item {{#selected}}selected{{/selected}} {{#isSlider}}slider{{/isSlider}}">' +
+							'<div id="item-label">{{{label}}}</div><div class="arrows">{{#isSlider}}<i class="fas fa-chevron-left"></i><div id="slider-label">{{{sliderLabel}}}</div><i class="fas fa-chevron-right"></i>{{/isSlider}}</div>' +
 						'</div>' +
 										
 					'{{/elements}}' +
 				'</div>'+
 				'<div class="scrollbottom"></div>' +
-				'<br>'+
 				'{{#elements}}' +
 				'{{#selected}}' +
+				'<div class="options-amount">{{{list_id}}}/{{{list_max}}}</div>' +
+				'<br>'+
 				'<div class="desciption">{{{desc}}}</div>' +
 				'{{/selected}}' +
 				'{{/elements}}' +
@@ -107,16 +108,22 @@
 
                     switch (element.type) {
                         case 'default':
+							element.list_id = i + 1;
+							element.list_max = menuData.elements.length;
                             break;
 
                         case 'slider': {
                             element.isSlider = true;
+							element.list_id = i + 1;
+							element.list_max = menuData.elements.length;
                             element.sliderLabel = (typeof element.options == 'undefined') ? element.value : element.options[element.value];
 
                             break;
                         }
 
                         default:
+							element.list_id = i + 1;
+							element.list_max = menuData.elements.length;
                             break;
                     }
 
@@ -290,10 +297,17 @@
                                     break;
 
                                 case 'slider': {
-                                    let min = (typeof elem.min == 'undefined') ? 0 : elem.min;
-
+                                    let min = (typeof elem.min == 'undefined') ? 0 : elem.min;		
                                     if (elem.value > min) {
+                                        if(typeof elem.hop != 'undefined'){			
+											 elem.value = (elem.value - elem.hop);
+											 if (elem.value < min){
+												 elem.value = min
+											 }
+										}
+										else{
                                         elem.value--;
+										}
                                         MenuData.change(focused.namespace, focused.name, elem);
                                     }
 
@@ -330,7 +344,20 @@
                                     }
 
                                     if (typeof elem.max != 'undefined' && elem.value < elem.max) {
-                                        elem.value++;
+										
+										if( typeof elem.hop != 'undefined'){
+											let min = (typeof elem.min == 'undefined') ? 0 : elem.min;
+											if(min > 0 && min == elem.value){
+												elem.value = 0;
+											}
+											 elem.value =  (elem.value + elem.hop);
+											  if (elem.value > elem.max){
+												 elem.value = elem.max
+											 }
+										}
+										else{
+											elem.value++;
+										}
                                         MenuData.change(focused.namespace, focused.name, elem);
                                     }
 
