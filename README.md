@@ -26,6 +26,7 @@ Example:
         local elements = {
  
                 {label = "Test Option", value = 'test' , desc = "Press if you want print text"},
+                {label = "Hop Test", value = 0  ,desc = "Look its so fast" , type = "slider" , min =0 , max =100, hop= 5},
         }
  
        MenuData.Open(
