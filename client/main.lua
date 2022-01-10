@@ -181,7 +181,7 @@ function checkdata(_data, menu)
 	data.selected = nil
 	data._namespace = nil
 	data._name = nil
-	data.type = nil
+	if data.type == "default" then data.type = nil end
 	for k,l in pairs(menu)do
 		l.selected = nil
 		cbdata = dataChecker(data,l,true)
