@@ -1,6 +1,3 @@
-
-/* MADE BY SLIZZARN - DISCORD: slizzarn#1144 GITHUB: https://github.com/slizzarn-fivem */
-
 @font-face {
 	font-family: crock;
 	src: url(../fonts/crock.ttf) format('truetype')
@@ -57,15 +54,15 @@
 .menu .head {
 	text-align: center;
 	height: 80px;
-  color: #fff;
-  font-weight: 300;
-  font-size: 25px;
-  background-image: url(menu_header_1a.png);
+	color: #fff;
+	font-weight: 300;
+	font-size: 25px;
+	background-image: url(menu_header_1a.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 90% 100%;
 	margin-bottom:10px;
-	margin-top:10px;
+	margin-top:30px;
 }
 
 .menu .menu-items {
@@ -76,22 +73,23 @@
 }
 
 .menu .menu-items .menu-item {
+	display: flex;
 	width:87%;
-	height:2vh;
-	display: block;
-  padding: 7px;
-    font-size: 18px;
- text-align: left;
-  text-indent: 5px;
-  margin-top: 6px;
-  margin-left:auto;
-  margin-right:auto;
-  background-image: url(selection_box_bg_1d.png);
+	height:5vh;
+	padding: 7px;
+	font-size: 18px;
+	text-align: left;
+	text-indent: 5px;
+	margin-top: 6px;
+	margin-left:auto;
+	margin-right:auto;
+	background-image: url(selection_box_bg_1d.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 100% 110%;
-		font-family: "HapnaSlabSerif-Medium", HapnaSlabSerif-Medium, serif;
-
+	font-family: "HapnaSlabSerif-Medium", HapnaSlabSerif-Medium, serif;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .menu .menu-items .menu-item.selected {
@@ -120,8 +118,7 @@ i{
 	margin-left:auto;
 	margin-right:auto;
 	text-align: center;
-	
-	
+	width: 370px;	
 }
 .options-amount {
 	float:right;
@@ -153,12 +150,17 @@ i{
 }
 
 .arrows {
- width:25%;
+ width:20%;
  float:left;
 }
 #item-label {
- width:75%;
+ width:80%;
  float:left;
+ /*width: 100%;*/
+ display: -webkit-box;
+ -webkit-line-clamp: 1;
+ -webkit-box-orient: vertical;
+ overflow: hidden;
 }
 
 
@@ -229,5 +231,3 @@ i{
   background: #1a242d;
   border-left: 4px solid #272733;
 }
-
-/* MADE BY SLIZZARN - DISCORD: slizzarn#1144 GITHUB: https://github.com/slizzarn-fivem */
